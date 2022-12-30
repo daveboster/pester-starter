@@ -1,0 +1,17 @@
+{
+  // See http://go.microsoft.com/fwlink/?LinkId=827846
+  // for the documentation about the extensions.json format
+  "recommendations": [
+      // Microsoft's PowerShell Extension
+      "ms-vscode.PowerShell",
+
+      // markdown help (lists, tables of content, etc.)
+      "yzhang.markdown-all-in-one",
+      // Image-pasting for markdown
+      "mushan.vscode-paste-image",
+
+      // ** Extensions Under Evaluation **
+      // Markdown Linter
+      "DavidAnson.vscode-markdownlint"
+  ]
+}
