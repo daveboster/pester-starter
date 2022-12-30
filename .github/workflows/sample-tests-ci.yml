@@ -1,0 +1,37 @@
+name: Sample Tests - CI
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/sample-tests-ci.yml'
+      - '.github/workflows/sample-tests-validate.yml'
+      - 'sample-tests/**.ps1'
+  push:
+    branches-ignore:
+      - "main" # handled by PR validation for Windows/Linux
+    paths:
+      - '.github/workflows/sample-tests-ci.yml'
+      - '.github/workflows/sample-tests-validate.yml'
+      - 'sample-tests/**.ps1'
+  workflow_dispatch:
+    inputs:
+      runOnWindows:
+        description: Enable to also run workflow on latest Windows machine type
+        required: false
+        type: boolean
+
+jobs:
+  ci-linux:
+    name: Run CI Tests on Ubuntu (Fast)
+    uses: ./.github/workflows/sample-tests-validate.yml
+    with:
+      os: ubuntu-latest
+
+  ci-windows:
+    if: ${{ github.event.pull_request.base.ref == 'main' ||  inputs.runOnWindows }} # Only run on PRs for Main
+    name: Run CI Tests on Windows (Slow)
+    uses: ./.github/workflows/sample-tests-validate.yml
+    with:
+      os: windows-latest

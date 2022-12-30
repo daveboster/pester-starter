@@ -1,0 +1,32 @@
+name: Sample Tests - Validate
+
+on:
+  workflow_dispatch:
+    inputs:
+      os:
+        description: type of machine to run the GitHub workflow
+        required: true
+        type: string
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
+
+jobs:
+  pester-test:
+    name: Run PowerShell Unit Tests
+    runs-on: ${{ inputs.os }}
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Validate Pester Environment (skip tests)
+        shell: pwsh
+        run: |
+          ./sample-tests/Invoke-SampleTests.ps1 -Skip -Passthru
+
+      - name: Run Sample Unit Tests
+        shell: pwsh
+        run: |
+          ./sample-tests/Invoke-SampleTests.ps1 -Passthru
