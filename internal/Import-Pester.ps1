@@ -8,8 +8,7 @@ if (!$powerShellModule) {
         $powerShellModule = Get-Module -Name $ModuleToImport -ListAvailable
     }
     catch {
-        Write-Error "Failed to install the $ModuleToImport module" -ErrorAction Stop
-        throw
+        Write-Error "Failed to install the $ModuleToImport module. $($PSItem.Exception.Message)" -ErrorAction Stop
     }
 }
 Write-Host "$ModuleToImport version: $($powerShellModule.Version.Major).$($powerShellModule.Version.Minor).$($powerShellModule.Version.Build)"
